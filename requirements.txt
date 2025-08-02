@@ -1,0 +1,3 @@
+pyintelbras
+fastapi[standard]
+python-dotenv
