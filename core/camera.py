@@ -11,16 +11,16 @@ class Camera:
 
         self.camera_ip = os.getenv("CAMERA_IP")
         self.camera_user = os.getenv("CAMERA_USER")
-        self.camera_password = os.getenv("CAMERA_PASSWORD")
-        self.camera_password_formmat = urllib.parse.quote(os.getenv("CAMERA_PASSWORD"), safe='')
+        self.camera_password = urllib.parse.quote(os.getenv("CAMERA_PASSWORD"), safe='')
 
         self.intelbras = IntelbrasAPI(f"http://{self.camera_ip}")
         
+        # self.intelbras.login(f"{self.camera_user}", f"{self.camera_password}")
         self.intelbras.login(f"{self.camera_user}", f"{self.camera_password}")
         
     
-    def rtp(self):
-        rtsp_url = f"rtsp://{self.camera_user}:{self.camera_password_formmat}@{self.camera_ip}:554/cam/realmonitor?channel=1&subtype=0"
+    def rtp(self):       
+        rtsp_url = self.intelbras.rtsp_url()
         
         cap = cv2.VideoCapture(rtsp_url)
         
@@ -53,4 +53,5 @@ class Camera:
                 
                 
 obj = Camera()
-obj.get_snapshot()
+# obj.get_snapshot()
+obj.rtp()
