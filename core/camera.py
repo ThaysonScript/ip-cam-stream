@@ -48,9 +48,3 @@ class Camera:
         if response.status_code == 200:
             with open("img.jpeg", "wb") as bf:
                 bf.write(response.content)
-                
-                
-                
-obj = Camera()
-# obj.get_snapshot()
-obj.rtp()
