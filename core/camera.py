@@ -15,7 +15,6 @@ class Camera:
 
         self.intelbras = IntelbrasAPI(f"http://{self.camera_ip}")
         
-        # self.intelbras.login(f"{self.camera_user}", f"{self.camera_password}")
         self.intelbras.login(f"{self.camera_user}", f"{self.camera_password}")
         
     
