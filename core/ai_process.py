@@ -117,8 +117,8 @@ class AiProcess:
         """
         Cria um vídeo a partir de uma sequência de imagens.
         """
-        folder_path = 'C:/Users/MonitoraMar/Documents/Thayson/datasets/dataset_recife/test-seg/images'
-        output_video_path_str = 'C:/Users/MonitoraMar/Documents/Thayson/interface/videos/testes_original.mp4'
+        folder_path = 'path_for/datasets/dataset_recife/test-seg/images'
+        output_video_path_str = 'path_for/interface/videos/testes_original.mp4'
         output_video_path = Path(output_video_path_str)
         output_video_path.parent.mkdir(parents=True, exist_ok=True)
 
