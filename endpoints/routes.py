@@ -18,9 +18,9 @@ async def ptz_control(
     rotate_lens: float = Query(0.0, ge=-1.0, le=1.0, description="Movimento vertical (Tilt): -1.0 a 1.0"),
     zoom: float = Query(0.0, ge=-1.0, le=1.0, description="Zoom óptico: -1.0 a 1.0")
 ):
-    result = camera.ptz_relative_movement(
+    response = camera.ptz_relative_movement(
         rotate_base=rotate_base,
         rotate_lens=rotate_lens,
         zoom=zoom
     )
-    return JSONResponse(content=result)
+    return JSONResponse(content=response)
