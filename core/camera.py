@@ -2,9 +2,10 @@ import os, cv2, urllib
 import sys
 from dotenv import load_dotenv
 import requests
-from intelbras_api.api import Api
 from pyintelbras import IntelbrasAPI
 from pyintelbras.helpers import parse_response
+
+from core.intelbras_api.api import Api
 
 
 class Camera:
@@ -29,7 +30,7 @@ class Camera:
         return getattr(self.intelbras, f'{method}')(action=action, **kwargs)
             
     
-    def rtp(self):        
+    def rtsp_viewer(self):        
         rtsp_url = self.intelbras.rtsp_url()
         
         cap = cv2.VideoCapture(rtsp_url)
@@ -63,7 +64,7 @@ class Camera:
             
 
     def ptz_relative_movement(self, channel=1, rotate_base=0, rotate_lens=0, zoom=0):       
-        response = self.__get_easy_url_request(
+        response_api = self.__get_easy_url_request(
             method='ptz',
             action='moveRelatively',
             channel=channel,
@@ -71,11 +72,11 @@ class Camera:
             arg2=rotate_lens,
             arg3=zoom
         )
-        print(self.api.get_with_digest(response.url, self.camera_user, self.camera_password))
 
-                
-                
-obj = Camera()
-# obj.rtp()
-obj.ptz_relative_movement(zoom=-0.4)
-# obj.get_snapshot()
+        response_api = self.api.get_with_digest(response_api.url, self.camera_user, self.camera_password)
+    
+        return {
+            "status_code": response_api.status_code,
+            "text": response_api.text,
+            "url": response_api.url
+        }
