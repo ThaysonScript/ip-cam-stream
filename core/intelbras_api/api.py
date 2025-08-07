@@ -1,15 +1,30 @@
 import hashlib
 import logging
+import os
 import random
 import re
 import sys
 
+from dotenv import load_dotenv
 import requests
+import urllib
+
+from pyintelbras import IntelbrasAPI
+from pyintelbras.helpers import parse_response
 
 
 class Api:
     def __init__(self):
-        pass
+        load_dotenv()
+
+        self.camera_ip = os.getenv("CAMERA_IP")
+        self.camera_user = os.getenv("CAMERA_USER")
+        self.camera_password = os.getenv("CAMERA_PASSWORD")
+        self.camera_password_formmat = urllib.parse.quote(os.getenv("CAMERA_PASSWORD"), safe='')
+
+        self.intelbras = IntelbrasAPI(f"http://{self.camera_ip}")
+        
+        self.intelbras.login(f"{self.camera_user}", f"{self.camera_password_formmat}")
     
     
     def enable_debug(self):
@@ -18,6 +33,13 @@ class Api:
         log = logging.getLogger('pyintelbras')
         log.addHandler(stream)
         log.setLevel(logging.DEBUG)
+    
+    
+    def get_easy_url_request(self, method=None, action=None, **kwargs):
+        """
+        Constroi requisição com método e parâmetros flexíveis de forma facil
+        """
+        return getattr(self.intelbras, f'{method}')(action=action, **kwargs)
     
     
     def __extract_digest_info(self, www_authenticate):
