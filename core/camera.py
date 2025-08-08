@@ -1,6 +1,7 @@
 import cv2
 
 from core.intelbras_api.api import Api
+from pyintelbras.helpers import parse_response
 
 
 class Camera:
@@ -63,7 +64,7 @@ class Camera:
         return {
             "status_code": intelbras_response_api.status_code,
             "url": intelbras_response_api.url,
-            "text": intelbras_response_api.text
+            "text": parse_response(intelbras_response_api.text)
         }  
         
         
@@ -94,7 +95,7 @@ class Camera:
         return {
             "status_code": intelbras_response_api.status_code,
             "url": intelbras_response_api.url,
-            "text": intelbras_response_api.text
+            "text": parse_response(intelbras_response_api.text)
         }
     
     
@@ -125,11 +126,11 @@ class Camera:
         return {
             "status_code": intelbras_response_api.status_code,
             "url": intelbras_response_api.url,
-            "text": intelbras_response_api.text
+            "text": parse_response(intelbras_response_api.text)
         }
     
     
-    def ptz_control_continuosly_moving(self, code='Continuously', channel=1, rotate_base=0, rotate_lens=0, zoom=0, time_moving=3600):
+    def ptz_control_continuosly_moving(self, code='Continuously', channel=1, rotate_base=0, rotate_lens=0, zoom=0, movement_time=3600):
         '''
         method: GET
         
@@ -149,7 +150,7 @@ class Camera:
             arg1=rotate_base,
             arg2=rotate_lens,
             arg3=zoom,
-            arg4=time_moving
+            arg4=movement_time
         )
 
         intelbras_response_api = self.api.get_with_digest(intelbras_response_api.url, self.api.camera_user, self.api.camera_password)
@@ -157,7 +158,7 @@ class Camera:
         return {
             "status_code": intelbras_response_api.status_code,
             "url": intelbras_response_api.url,
-            "text": intelbras_response_api.text
+            "text": parse_response(intelbras_response_api.text)
         }
         
         
@@ -195,7 +196,7 @@ class Camera:
         return {
             "status_code": intelbras_response_api.status_code,
             "url": intelbras_response_api.url,
-            "text": intelbras_response_api.text
+            "text": parse_response(intelbras_response_api.text)
         }
         
         

@@ -1,0 +1,17 @@
+# 1. Imagem base oficial do Python
+FROM python:3.13.5
+
+# 2. Definir diretório de trabalho
+WORKDIR /back_api
+
+# 3. Copiar todos os arquivos do projeto
+COPY . .
+
+# 4. Dar permissão de execução e rodar o setup.sh
+RUN /usr/bin/env bash ./setup.sh
+
+# 5. Expor a porta da aplicação (FastAPI normalmente usa 8000)
+EXPOSE 8081
+
+# 6. Comando para rodar o servidor FastAPI com Uvicorn
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8081"]
